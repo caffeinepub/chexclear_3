@@ -66,7 +66,7 @@ async function generateLetter(model: string, client: Client) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: model || "llama-3.3-70b",
+      model: model || "llama-3.3-70b-e2ee",
       messages: [
         { role: "system", content: SYS },
         {
@@ -146,7 +146,7 @@ export default function App() {
   const [savedState, setSavedState] = useState<"" | "saving" | "ok" | "err">(
     "",
   );
-  const [model, setModel] = useState("llama-3.3-70b");
+  const [model, setModel] = useState("llama-3.3-70b-e2ee");
   const [form, setForm] = useState<Partial<Client>>({});
   const [draft, setDraft] = useState<Client | null>(null);
   const _saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1395,11 +1395,13 @@ export default function App() {
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
                   >
-                    <option value="llama-3.3-70b">llama-3.3-70b (fast)</option>
-                    <option value="llama-3.3-70b-e2ee">
-                      llama-3.3-70b E2EE (encrypted)
+                    <option value="llama-3.3-70b">
+                      llama-3.3-70b (standard, fast)
                     </option>
-                    <option value="venice-uncensored">venice-uncensored</option>
+                    <option value="llama-3.3-70b-e2ee">
+                      llama-3.3-70b-e2ee (end-to-end encrypted, slower but fully
+                      private)
+                    </option>
                   </select>
                   <div
                     style={{
@@ -1409,7 +1411,15 @@ export default function App() {
                       marginTop: 4,
                     }}
                   >
-                    E2EE models require Venice Pro
+                    E2EE models require Venice Pro. Get it at{" "}
+                    <a
+                      href="https://venice.ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: bl }}
+                    >
+                      venice.ai
+                    </a>
                   </div>
                 </div>
                 <button
